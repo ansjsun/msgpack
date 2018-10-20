@@ -19,15 +19,17 @@ type I interface {
 
 func ExampleMarshal_Interface() {
 
+	msgpack.RegisterType(Item{})
+
 	var i I = &Item{Foo: "bar"}
 
-	b, err := msgpack.Marshal(i)
+	b, err := msgpack.MarshalInterface(i)
 	if err != nil {
 		panic(err)
 	}
 
 	var i2 I = Item{}
-	err = msgpack.Unmarshal(b, i2)
+	err = msgpack.UnmarshalInterface(b, i2)
 	if err != nil {
 		panic(err)
 	}
