@@ -12,6 +12,7 @@ type Item1 struct {
 
 type Item2 struct {
 	Name2 string
+	I I
 }
 
 type Items struct {
@@ -55,7 +56,7 @@ func main() {
 	arr := []I{
 		Item1{"1",},
 		Item1{"2",},
-		Item2{"5",},
+		Item2{"5",Item1{"5"}},
 	}
 
 	var p1 I = Item1{"p1",}
@@ -67,7 +68,7 @@ func main() {
 
 	mapf := map[string]I{
 		"aaa": Item1{"1",},
-		"bbb": Item2{"2",},
+		"bbb": Item2{"2",Item1{"5"}},
 	}
 
 	mapP := map[string]*I{
@@ -79,7 +80,7 @@ func main() {
 	var item1 I = Item1{"itemPoint",}
 	in := Items{
 		Item1: Item1{"hello",},
-		Item2: Item2{"ansj",},
+		Item2: Item2{"ansj",Item1{"5"}},
 		Name:  "ansj",
 		Arr:   arr,
 		ArrP:  arrP,
@@ -100,5 +101,4 @@ func main() {
 
 	marshal, _ := json.Marshal(out)
 	fmt.Println(string(marshal))
-
 }
