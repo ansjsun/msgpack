@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/vmihailenco/msgpack"
+	"github.com/ansj/msgpack"
 )
 
 func init() {

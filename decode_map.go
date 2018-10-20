@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/vmihailenco/msgpack/codes"
+	"github.com/ansj/msgpack/codes"
 )
 
 const mapElemsAllocLimit = 1e4
@@ -333,6 +333,5 @@ func decodeStructValue(d *Decoder, v reflect.Value) error {
 			}
 		}
 	}
-
 	return nil
 }

@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/vmihailenco/msgpack/codes"
+	"github.com/ansj/msgpack/codes"
 )
 
 const bytesAllocLimit = 1024 * 1024 // 1mb
@@ -36,6 +36,10 @@ func Unmarshal(data []byte, v interface{}) error {
 	return NewDecoder(bytes.NewReader(data)).Decode(v)
 }
 
+func UnmarshalInterface(data []byte, v interface{}) error {
+	return NewDecoder(bytes.NewReader(data)).RegInterface(true).Decode(v)
+}
+
 type Decoder struct {
 	r   io.Reader
 	s   io.ByteScanner
@@ -46,6 +50,7 @@ type Decoder struct {
 
 	useLoose   bool
 	useJSONTag bool
+	regInterface  bool //ANSJ Add
 
 	decodeMapFunc func(*Decoder) (interface{}, error)
 }
@@ -77,6 +82,12 @@ func (d *Decoder) UseDecodeInterfaceLoose(flag bool) {
 // if there is no msgpack tag.
 func (d *Decoder) UseJSONTag(v bool) *Decoder {
 	d.useJSONTag = v
+	return d
+}
+
+// RegInterface causes the Encoder real strut name.
+func (d *Decoder) RegInterface(flag bool) *Decoder { //ANSJ
+	d.regInterface = flag
 	return d
 }
 

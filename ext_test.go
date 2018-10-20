@@ -5,8 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/vmihailenco/msgpack"
-	"github.com/vmihailenco/msgpack/codes"
+	"github.com/ansj/msgpack"
+	"github.com/ansj/msgpack/codes"
 )
 
 func init() {

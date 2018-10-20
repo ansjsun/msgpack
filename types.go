@@ -1,6 +1,7 @@
 package msgpack
 
 import (
+	"errors"
 	"reflect"
 	"sync"
 )
@@ -32,8 +33,22 @@ func Register(value interface{}, enc encoderFunc, dec decoderFunc) {
 	}
 }
 
-//------------------------------------------------------------------------------
+//ANSJ registerType in cache Sure it no repetition.
+func RegisterType(i interface{}) {
+	t := reflect.TypeOf(i)
+	typeCache[t.String()] = t
+}
 
+func New(name string) (reflect.Value, error) {
+	t := typeCache[name]
+	if t == nil {
+		return reflect.ValueOf(name), errors.New("not found name: " + name + " by cache ")
+	}
+	return reflect.New(t), nil
+}
+
+//------------------------------------------------------------------------------
+var typeCache = make(map[string]reflect.Type) //ANSj
 var structs = newStructCache(false)
 var jsonStructs = newStructCache(true)
 
