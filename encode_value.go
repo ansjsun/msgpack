@@ -150,8 +150,10 @@ func encodeBoolValue(e *Encoder, v reflect.Value) error {
 
 func encodeInterfaceValue(e *Encoder, v reflect.Value) error {
 	if v.IsNil() {
+		e.EncodeString("") //write empty str , decode find it to skip
 		return e.EncodeNil()
 	}
+	e.EncodeString(v.Elem().Type().String()) //ANSJ Insert EncodingName
 	return e.EncodeValue(v.Elem())
 }
 

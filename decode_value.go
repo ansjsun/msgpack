@@ -3,9 +3,8 @@ package msgpack
 import (
 	"errors"
 	"fmt"
+	"github.com/ansj/msgpack/codes"
 	"reflect"
-
-	"github.com/vmihailenco/msgpack/codes"
 )
 
 var interfaceType = reflect.TypeOf((*interface{})(nil)).Elem()
@@ -251,7 +250,23 @@ func decodeBoolValue(d *Decoder, v reflect.Value) error {
 	return nil
 }
 
-func decodeInterfaceValue(d *Decoder, v reflect.Value) error {
+func decodeInterfaceValue(d *Decoder, value reflect.Value) error {
+
+	v := value
+
+	if d.regInterface {
+		if name, e := d.DecodeString(); e != nil { //ANSJ get type name
+			return e
+		} else if name == ""{
+			//NOTING to do
+		}else if tempV, e := New(name); e != nil {
+			return e
+		} else {
+			v = tempV
+		}
+	}
+
+
 	if v.IsNil() {
 		return d.interfaceValue(v)
 	}
@@ -263,8 +278,11 @@ func decodeInterfaceValue(d *Decoder, v reflect.Value) error {
 			return d.DecodeNil()
 		}
 	}
-
-	return d.DecodeValue(elem)
+	err := d.DecodeValue(elem)
+	if err == nil {
+		value.Set(elem)
+	}
+	return err
 }
 
 func (d *Decoder) interfaceValue(v reflect.Value) error {

@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/vmihailenco/msgpack/codes"
+	"github.com/ansj/msgpack/codes"
 )
 
 type writer interface {
@@ -45,7 +45,7 @@ func (w *byteWriter) WriteString(s string) (int, error) {
 // Marshal returns the MessagePack encoding of v.
 func Marshal(v interface{}) ([]byte, error) {
 	var buf bytes.Buffer
-	err := NewEncoder(&buf).Encode(v)
+	err := NewEncoder(&buf).RegInterface(true).Encode(v)
 	return buf.Bytes(), err
 }
 
@@ -57,6 +57,7 @@ type Encoder struct {
 	structAsArray bool
 	useJSONTag    bool
 	useCompact    bool
+	regInterface  bool //ANSJ Add
 }
 
 // NewEncoder returns a new encoder that writes to w.
@@ -90,6 +91,13 @@ func (e *Encoder) StructAsArray(flag bool) *Encoder {
 // if there is no msgpack tag.
 func (e *Encoder) UseJSONTag(flag bool) *Encoder {
 	e.useJSONTag = flag
+	return e
+}
+
+// RegInterface causes the Encoder real strut name
+// if there is no msgpack tag.
+func (e *Encoder) RegInterface(flag bool) *Encoder { //ANSJ
+	e.regInterface = flag
 	return e
 }
 

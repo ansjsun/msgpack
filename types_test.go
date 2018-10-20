@@ -11,8 +11,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vmihailenco/msgpack"
-	"github.com/vmihailenco/msgpack/codes"
+	"github.com/ansj/msgpack"
+	"github.com/ansj/msgpack/codes"
 )
 
 //------------------------------------------------------------------------------
@@ -341,7 +341,7 @@ func (t *typeTest) assertErr(err error, s string) {
 
 var (
 	intSlice   = make([]int, 0, 3)
-	repoURL, _ = url.Parse("https://github.com/vmihailenco/msgpack")
+	repoURL, _ = url.Parse("https://github.com/ansj/msgpack")
 	typeTests  = []typeTest{
 		{in: make(chan bool), encErr: "msgpack: Encode(unsupported chan bool)"},
 
