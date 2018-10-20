@@ -28,7 +28,7 @@ func ExampleMarshal_Interface() {
 		panic(err)
 	}
 
-	var i2 I = Item{}
+	var i2 I = &Item{}
 	err = msgpack.UnmarshalInterface(b, i2)
 	if err != nil {
 		panic(err)
