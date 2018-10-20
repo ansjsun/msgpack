@@ -298,7 +298,6 @@ func (d *Decoder) interfaceValue(v reflect.Value) error {
 				return nil
 			}
 		}
-
 		v.Set(reflect.ValueOf(vv))
 	}
 

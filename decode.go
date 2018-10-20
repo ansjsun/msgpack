@@ -33,6 +33,10 @@ func makeBuffer() []byte {
 // Unmarshal decodes the MessagePack-encoded data and stores the result
 // in the value pointed to by v.
 func Unmarshal(data []byte, v interface{}) error {
+	return NewDecoder(bytes.NewReader(data)).Decode(v)
+}
+
+func UnmarshalInterface(data []byte, v interface{}) error {
 	return NewDecoder(bytes.NewReader(data)).RegInterface(true).Decode(v)
 }
 

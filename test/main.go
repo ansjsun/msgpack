@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/ansj/msgpack"
 )
@@ -45,6 +46,9 @@ type I interface {
 
 func main() {
 
+	var tt I = Item1{}
+	msgpack.Register(tt,nil,nil)
+
 	msgpack.RegisterType(Item1{})
 	msgpack.RegisterType(Item2{})
 
@@ -85,14 +89,16 @@ func main() {
 		ItemP: &item1,
 	}
 
-	bytes, _ := msgpack.Marshal(&in)
+	bytes, _ := msgpack.MarshalInterface(&in)
 
 	out := Items{}
 	fmt.Println(bytes)
-	if err := msgpack.Unmarshal(bytes, &out); err != nil {
+	if err := msgpack.UnmarshalInterface(bytes, &out); err != nil {
 		panic(err)
 	}
-
 	fmt.Println(out)
+
+	marshal, _ := json.Marshal(out)
+	fmt.Println(string(marshal))
 
 }

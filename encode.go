@@ -45,6 +45,12 @@ func (w *byteWriter) WriteString(s string) (int, error) {
 // Marshal returns the MessagePack encoding of v.
 func Marshal(v interface{}) ([]byte, error) {
 	var buf bytes.Buffer
+	err := NewEncoder(&buf).Encode(v)
+	return buf.Bytes(), err
+}
+
+func MarshalInterface(v interface{}) ([]byte, error) {
+	var buf bytes.Buffer
 	err := NewEncoder(&buf).RegInterface(true).Encode(v)
 	return buf.Bytes(), err
 }
