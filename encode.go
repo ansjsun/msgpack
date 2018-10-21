@@ -51,7 +51,7 @@ func Marshal(v interface{}) ([]byte, error) {
 
 func MarshalInterface(v interface{}) ([]byte, error) {
 	var buf bytes.Buffer
-	err := NewEncoder(&buf).RegInterface(true).Encode(v)
+	err := NewEncoder(&buf).RegInterface(true).StructAsArray(true).Encode(v)
 	return buf.Bytes(), err
 }
 
